@@ -1,0 +1,53 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class URL {
+        private:
+                string scheme;
+                string authority;
+                string path;
+                
+        public:
+                URL(string url) {
+                        int firstColonIndex = url.find(":");
+                        scheme = url.substr(0, firstColonIndex);
+                        string restUrl = url.substr(firstColonIndex+3, url.length());
+                        int thirdSlashIndex = restUrl.find("/");
+                        authority = url.substr(firstColonIndex+3, thirdSlashIndex);
+                        path = restUrl.substr(thirdSlashIndex, url.length());
+                }
+                
+                string getScheme() {
+                        return scheme;
+                }
+                
+                string getAuthority() {
+                        return authority;
+                }
+                
+                string getPath() {
+                        return path;
+                }
+                
+                string getCompleteURL() {
+                        return scheme+"://"+authority+path;
+                }
+};
+
+int main() {
+        
+        URL u("http://www.google.com:8080/new/posts");
+        cout<<"Scheme: "<<u.getScheme()<<endl;
+        cout<<"Authority: "<<u.getAuthority()<<endl;
+        cout<<"Path: "<<u.getPath()<<endl;
+        cout<<"Complete URL: "<<u.getCompleteURL()<<endl;
+        
+        return 0;
+}
+Output
+
+Scheme: http
+Authority: www.google.com:8080
+Path: /new/posts
+Complete URL: http://www.google.com:8080/new/posts
